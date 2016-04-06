@@ -8,65 +8,123 @@
     <title>APPanel</title>
 
     <!-- Fonts -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet'
+          type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-     <link href="/" rel="stylesheet">
+    <link href="/css/template.css" rel="stylesheet">
+    <meta name="_token" content="{!! Crypt::encrypt(csrf_token()) !!}">
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
 
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+<div id="wrapper">
 
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <a href="/">
                     APPanel
                 </a>
-            </div>
+            </li>
+            @if (\Auth::check())
+                <li class="text-white">
+                    Добро пожаловать, {{ \Auth::user()->name }}
+                </li>
+                <li>
+                    <a href="/#sites/">Список сайтов</a>
+                </li>
+                <li>
+                    <a href="/logout">Выход</a>
+                </li>
+            @else
+                <li>
+                    <a href="/">Вход</a>
+                </li>
+            @endif
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
 
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
-                </ul>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        @yield('content')
+    </div>
+    <!-- /#page-content-wrapper -->
+    @if (\Auth::check())
+        <script type="text/template" id="tpl-sites">
+            <h2 class="page-header text-center">List of sites</h2>
+            <p class="text-center">
+                <a href="#sites/new" class="btn btn-lg btn-success">Add website</a>
+            </p>
+            <table class="table table-hover table-responsive sites-container">
+                <tr>
+                    <th>Name</th>
+                    <th>Url</th>
+                    <th>Action</th>
+                </tr>
+            </table>
+        </script>
+        <script type="text/template" id="tpl-site">
+            <td><%- name %></td>
+            <td>
+                <a href="http://{{ config("panel.sites.domain") }}/<%- url %>">http://{{ config("panel.sites.domain") }}/<%- url %></a>
+            </td>
+            <td>
+                <a href="#sites/edit/<%- id %>"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a href="#sites/delete/<%- id %>" class="delete-contract"><span class="glyphicon glyphicon-remove"></span></a>
+            </td>
+        </script>
+        <script type="text/template" id="tpl-new-site">
+            <h2 class="page-header text-center"><%=isNew ? 'Create' : 'Edit' %> site</h2>
+            <form role="form" class="js-add-new form-horizontal contract-form">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Name:</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="name" class="form-control site-name-input" value="<%- name %>">
+                        <div class="help-block">For identification</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Url:</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="url" class="form-control site-name-input" value="<%- url %>">
+                        <div class="help-block">For website accessing "/url"</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-3">
+                        <button type="submit" class="btn btn-outline btn-lg btn-block">Submit</button>
+                    </div>
+                    <div class="col-sm-3">
+                        <a href="#sites" class="btn btn-outline btn-lg btn-block">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </script>
 
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
+`
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-            </div>
-        </div>
-    </nav>
+    @endif
 
-    @yield('content')
+</div>
+<!-- /#wrapper -->
 
-    <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+<!-- JavaScripts -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="/bower_components/underscore/underscore-min.js"></script>
+<script src="/bower_components/backbone/backbone-min.js"></script>
+<script src="/bower_components/jQuery.serializeObject/dist/jquery.serializeObject.min.js"></script>
+
+<script src="/js/app.js"></script>
+<script src="/js/models/site.js"></script>
+<script src="/js/collections/sites.js"></script>
+<script src="/js/views/site.js"></script>
+<script src="/js/views/sites.js"></script>
+<script src="/js/views/siteForm.js"></script>
+<script src="/js/router.js"></script>
 </body>
 </html>

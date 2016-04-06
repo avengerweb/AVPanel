@@ -152,6 +152,7 @@ return [
          * Custom
          */
         Collective\Html\HtmlServiceProvider::class,
+        Collective\Remote\RemoteServiceProvider::class,
 
 
         /*
@@ -213,7 +214,8 @@ return [
          */
         
         'Form'      => Collective\Html\FormFacade::class,
-        'Html'      => Collective\Html\HtmlFacade::class
+        'Html'      => Collective\Html\HtmlFacade::class,
+        'SSH'       => Collective\Remote\RemoteFacade::class
     ],
 
 ];

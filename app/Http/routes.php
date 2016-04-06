@@ -24,14 +24,14 @@
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
-    Route::get("/info", function() {
-        return Session::getId();
-    });
-
     Route::group(["prefix" => "api"], function() {
         Route::resource("auth", "REST\AuthController");
+        Route::group(["middleware" => 'auth'], function() {
+            Route::resource("sites", "REST\SiteController");
+        });
     });
 
     Route::get('/', 'HomeController@index');
+    Route::get('/config/{id}', "REST\SiteController@configure");
     Route::get('/home', 'HomeController@index');
 });

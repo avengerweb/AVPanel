@@ -1,0 +1,35 @@
+{
+	"name": "serializeObject",
+	"version": "2.0.3",
+	"title": "jQuery serializeObject",
+	"author": {
+		"name": "David G. Hong",
+		"email": "davidhong.code@gmail.com",
+		"url": "https://github.com/hongymagic"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "MIT-LICENSE.txt"
+		}
+	],
+	"dependencies": {
+		"jquery": ">=1.4"
+	},
+	"description": "Convert your form data to into JSON (JavaScript Object Notation) format, so you can manipulate them easily. See Github project page for information.",
+	"tags": [
+		"form",
+		"JSON",
+		"serializeObject",
+		"serialize",
+		"serialise"
+	],
+	"homepage": "https://github.com/hongymagic/jQuery.serializeObject",
+	"bugs": "https://github.com/hongymagic/jQuery.serializeObject/issues",
+	"maintainers": [
+		{
+			"name": "David G. Hong",
+			"url": "https://github.com/hongymagic"
+		}
+	]
+}
