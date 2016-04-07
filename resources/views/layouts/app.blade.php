@@ -78,8 +78,8 @@
         <script type="text/template" id="tpl-site">
             <td><%- name %></td>
             <td>
-                <a href="http://{{ config("panel.sites.domain") }}/<%- url %>">http://{{ config("panel.sites.domain") }}
-                    /<%- url %></a>
+                <a target="_blank" href="http://{{ config("panel.sites.domain") }}/<%- url %>">
+                    http://{{ config("panel.sites.domain") }}/<%- url %></a>
             </td>
             <td>
                 <a href="#sites/edit/<%- id %>"><span class="glyphicon glyphicon-pencil"></span></a>
