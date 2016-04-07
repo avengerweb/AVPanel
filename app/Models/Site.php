@@ -148,7 +148,7 @@ class Site extends Model
         }
 
         if ($dirChanged && $connection->exists($vhostsDir . "/" . $original['directory'] . ".conf")) {
-            $connection->delete($vhostsDir . "/" . $this->directory . ".conf");
+            $connection->delete($vhostsDir . "/" . $original['directory'] . ".conf");
         }
 
         $confFile = $vhostsDir . "/" . $this->directory . ".conf";
@@ -161,9 +161,6 @@ class Site extends Model
                 $connection->delete($confFile);
 
         // Restart server
-        $connection->run("service nginx restart", function($out) {
-
-        });
-
+        $connection->run("service nginx reload");
     }
 }

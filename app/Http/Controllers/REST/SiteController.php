@@ -70,13 +70,19 @@ class SiteController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove site and keep files
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $site = Site::forMe()->findOrFail($id);
+        $connection = \SSH::connection(config("panel.nginx.connection"));
+        $vhostsDir = config("panel.nginx.vhosts") . "/" . $site->user->getNick();
+        if ($connection->exists($vhostsDir . "/" . $site->directory . ".conf"))
+            $connection->delete($vhostsDir . "/" . $site->directory . ".conf");
+
+        $site->delete();
     }
 }
