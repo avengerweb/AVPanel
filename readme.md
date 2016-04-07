@@ -1,6 +1,6 @@
-# APPanel
+# AVPanel
 
-Website managment panel
+Website management panel
 
 ### Server Requirements
  - nginx
