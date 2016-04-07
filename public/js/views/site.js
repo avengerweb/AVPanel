@@ -1,4 +1,4 @@
-APPanel.Views.Site = Backbone.View.extend({
+AVPanel.Views.Site = Backbone.View.extend({
   tagName: 'tr',
   className: '',
   template: _.template($('#tpl-site').html()),

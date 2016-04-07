@@ -1,4 +1,4 @@
-APPanel.Router = Backbone.Router.extend({
+AVPanel.Router = Backbone.Router.extend({
   routes: {
     '': 'home',
     'sites': 'showSites',

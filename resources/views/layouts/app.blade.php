@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>APPanel</title>
+    <title>AVPanel</title>
 
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet'
@@ -26,22 +26,30 @@
         <ul class="sidebar-nav">
             <li class="sidebar-brand">
                 <a href="/">
-                    APPanel
+                    AVPanel
                 </a>
             </li>
             @if (\Auth::check())
-                <li class="text-white">
-                    Добро пожаловать, {{ \Auth::user()->name }}
+                <li class="welcome-text">
+                    Welcome, {{ \Auth::user()->name }}
+                    <hr />
                 </li>
                 <li>
-                    <a href="/#sites">Список сайтов</a>
+                    <a href="/#sites">My websites</a>
                 </li>
                 <li>
-                    <a href="/logout">Выход</a>
+                    <a href="/#sites/new">Create new</a>
+                </li>
+                <li>
+                    <a href="/logout">Sign out</a>
                 </li>
             @else
                 <li>
-                    <a href="/">Вход</a>
+                    <a href="/">Log in</a>
+                </li>
+
+                <li>
+                    <a href="/register">Sign up</a>
                 </li>
             @endif
         </ul>
@@ -70,11 +78,13 @@
         <script type="text/template" id="tpl-site">
             <td><%- name %></td>
             <td>
-                <a href="http://{{ config("panel.sites.domain") }}/<%- url %>">http://{{ config("panel.sites.domain") }}/<%- url %></a>
+                <a href="http://{{ config("panel.sites.domain") }}/<%- url %>">http://{{ config("panel.sites.domain") }}
+                    /<%- url %></a>
             </td>
             <td>
                 <a href="#sites/edit/<%- id %>"><span class="glyphicon glyphicon-pencil"></span></a>
-                <a href="#sites/delete/<%- id %>" class="delete-contract"><span class="glyphicon glyphicon-remove"></span></a>
+                <a href="#sites/delete/<%- id %>" class="delete-contract"><span
+                            class="glyphicon glyphicon-remove"></span></a>
             </td>
         </script>
         <script type="text/template" id="tpl-new-site">
@@ -96,9 +106,9 @@
                             <% if (!isNew) { %>
                             <a href="http://{{ config("panel.sites.domain") }}/<%- url %>" target="_blank">
                                 http://{{ config("panel.sites.domain") }}/<%- url %></a>
-                        <% } else { %>
-                       "/url"
-                        <% } %>
+                            <% } else { %>
+                            "/url"
+                            <% } %>
                         </div>
 
                     </div>
@@ -107,20 +117,22 @@
                 <div class="form-group">
                     <div class="btn-group  col-sm-offset-4 col-sm-6" data-toggle="buttons">
                         <label class="btn btn-primary <%- access_log == 1 ? 'active' : '' %>">
-                        <input type="checkbox" name="access_log" <%- access_log == 1 ? 'checked' : '' %> > Enable access log
-                    </label>
-                    <label class="btn btn-primary <%-error_log == 1 ? 'active' : '' %>">
-                        <input type="checkbox" name="error_log" <%-error_log == 1 ? 'checked' : '' %> > Enable error log
-                    </label>
-                </div>
+                            <input type="checkbox" name="access_log" <%- access_log == 1 ? 'checked' : '' %> > Enable
+                            access log
+                        </label>
+                        <label class="btn btn-primary <%-error_log == 1 ? 'active' : '' %>">
+                            <input type="checkbox" name="error_log" <%-error_log == 1 ? 'checked' : '' %> > Enable error
+                            log
+                        </label>
+                    </div>
                 </div>
 
                 <% if (!isNew) { %>
-                    <div class="form-group">
+                <div class="form-group">
                     <label class="col-sm-4 control-label">Path:</label>
                     <div class="col-sm-6">
                         <input type="text" disabled class="form-control site-name-input" value="/www/<%- directory %>">
-                              <div class="help-block">Website root directory</div>
+                        <div class="help-block">Website root directory</div>
                     </div>
                 </div>
                 <% } %>

@@ -16,7 +16,7 @@
              */
             "connection" => "nginx",
             "vhosts" => "/etc/nginx/vhosts/",
-            "workdir" => "/var/appanel/",
+            "workdir" => "/var/avpanel/",
             /*
              * Nginx user group
              */

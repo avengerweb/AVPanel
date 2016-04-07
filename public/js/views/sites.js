@@ -1,8 +1,8 @@
-APPanel.Views.Sites = Backbone.View.extend({
+AVPanel.Views.Sites = Backbone.View.extend({
   template: _.template($('#tpl-sites').html()),
 
   renderOne: function(site) {
-    var itemView = new APPanel.Views.Site({model: site});
+    var itemView = new AVPanel.Views.Site({model: site});
     this.$('.sites-container').append(itemView.render().$el);
   },
 

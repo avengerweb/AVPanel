@@ -40,6 +40,8 @@ class SiteController extends Controller
         $site->configure(true);
         
         $site->save();
+
+        return $site;
     }
     
     /**

@@ -1,4 +1,4 @@
-APPanel.Views.SiteForm = Backbone.View.extend({
+AVPanel.Views.SiteForm = Backbone.View.extend({
   template: _.template($('#tpl-new-site').html()),
 
   events: {
@@ -15,7 +15,6 @@ APPanel.Views.SiteForm = Backbone.View.extend({
 
   onFormSubmit: function(e) {
     e.preventDefault();
-
     this.trigger('form:submitted', this.$(".js-add-new").serializeObject());
   }
 });

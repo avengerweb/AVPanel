@@ -1,4 +1,5 @@
-APPanel.Models.Site = Backbone.Model.extend({
+AVPanel.Models.Site = Backbone.Model.extend({
+  urlRoot: '/api/sites',
   defaults: {
     name: null,
     url: null,

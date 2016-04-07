@@ -1,14 +1,14 @@
 /**
  * Created by AvengerWeb on 27.03.16.
  */
-window.APPanel = {
+window.AVPanel = {
     Models: {},
     Collections: {},
     Views: {},
 
     start: function() {
-        var sites = new APPanel.Collections.Sites(),
-            router = new APPanel.Router();
+        var sites = new AVPanel.Collections.Sites(),
+            router = new AVPanel.Router();
 
         router.on('route:home', function() {
             router.navigate('sites', {
@@ -19,25 +19,26 @@ window.APPanel = {
 
         router.on('route:showSites', function() {
 
-            var sitesView = new APPanel.Views.Sites({
+            var sitesView = new AVPanel.Views.Sites({
                 collection: sites
             });
             $('#page-content-wrapper').html(sitesView.render().$el);
         });
 
         router.on('route:newSite', function() {
-            var newSiteForm = new APPanel.Views.SiteForm({
-                model: new APPanel.Models.Site()
+            var newSiteForm = new AVPanel.Views.SiteForm({
+                model: new AVPanel.Models.Site()
             });
 
             newSiteForm.on('form:submitted', function(attrs) {
-                APPanel.errors.clear(newSiteForm.$el);
+                AVPanel.errors.clear(newSiteForm.$el);
                 this.model.save(attrs, {
-                    success: function () {
+                    success: function (response) {
+                        sites.add(response);
                         router.navigate('sites', true);
                     },
                     error: function (model, response) {
-                        APPanel.errors.handle(newSiteForm.$el, response.responseJSON);
+                        AVPanel.errors.handle(newSiteForm.$el, response.responseJSON);
                     }
                 });
             });
@@ -50,19 +51,19 @@ window.APPanel = {
                 editSiteForm;
 
             if (site) {
-                editSiteForm = new APPanel.Views.SiteForm({
+                editSiteForm = new AVPanel.Views.SiteForm({
                     model: site
                 });
 
                 editSiteForm.on('form:submitted', function(attrs) {
                     site.set(attrs);
-                    APPanel.errors.clear(editSiteForm.$el);
+                    AVPanel.errors.clear(editSiteForm.$el);
                     this.model.save(attrs, {
                         success: function () {
                             router.navigate('sites', true);
                         },
                         error: function (model, response) {
-                            APPanel.errors.handle(editSiteForm.$el, response.responseJSON);
+                            AVPanel.errors.handle(editSiteForm.$el, response.responseJSON);
                         }
                     });
 
@@ -114,6 +115,6 @@ $(document).ready(function() {
         $("#wrapper").toggleClass("toggled");
     });
 
-    APPanel.start();
+    AVPanel.start();
 
 });

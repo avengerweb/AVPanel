@@ -20,7 +20,7 @@
 			<a href="http://{{ config("panel.sites.domain") }}/{{ $site->url }}">
 				http://{{ config("panel.sites.domain") }}/{{ $site->url }}</a> successful created!</p>
 		<hr />
-		<small>APPanel &copy; 2016</small>
+		<small>AVPanel &copy; 2016</small>
 	</div>
 </div>
 

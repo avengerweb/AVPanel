@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "avengerweb/avpanel",
+    "description": "AVPanel - test task for fast vps.",
+    "keywords": ["avpanel", "manager", "laravel"],
     "license": "MIT",
     "type": "project",
     "require": {
