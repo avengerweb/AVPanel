@@ -34,7 +34,7 @@
                     Добро пожаловать, {{ \Auth::user()->name }}
                 </li>
                 <li>
-                    <a href="/#sites/">Список сайтов</a>
+                    <a href="/#sites">Список сайтов</a>
                 </li>
                 <li>
                     <a href="/logout">Выход</a>
@@ -78,7 +78,7 @@
             </td>
         </script>
         <script type="text/template" id="tpl-new-site">
-            <h2 class="page-header text-center"><%=isNew ? 'Create' : 'Edit' %> site</h2>
+            <h2 class="page-header text-center"><%- isNew ? 'Create' : 'Edit' %> site</h2>
             <form role="form" class="js-add-new form-horizontal contract-form">
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Name:</label>
@@ -91,9 +91,40 @@
                     <label class="col-sm-4 control-label">Url:</label>
                     <div class="col-sm-6">
                         <input type="text" name="url" class="form-control site-name-input" value="<%- url %>">
-                        <div class="help-block">For website accessing "/url"</div>
+                        <div class="help-block">
+                            For website accessing
+                            <% if (!isNew) { %>
+                            <a href="http://{{ config("panel.sites.domain") }}/<%- url %>" target="_blank">
+                                http://{{ config("panel.sites.domain") }}/<%- url %></a>
+                        <% } else { %>
+                       "/url"
+                        <% } %>
+                        </div>
+
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <div class="btn-group  col-sm-offset-4 col-sm-6" data-toggle="buttons">
+                        <label class="btn btn-primary <%- access_log == 1 ? 'active' : '' %>">
+                        <input type="checkbox" name="access_log" <%- access_log == 1 ? 'checked' : '' %> > Enable access log
+                    </label>
+                    <label class="btn btn-primary <%-error_log == 1 ? 'active' : '' %>">
+                        <input type="checkbox" name="error_log" <%-error_log == 1 ? 'checked' : '' %> > Enable error log
+                    </label>
+                </div>
+                </div>
+
+                <% if (!isNew) { %>
+                    <div class="form-group">
+                    <label class="col-sm-4 control-label">Path:</label>
+                    <div class="col-sm-6">
+                        <input type="text" disabled class="form-control site-name-input" value="/www/<%- directory %>">
+                              <div class="help-block">Website root directory</div>
+                    </div>
+                </div>
+                <% } %>
+
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-3">
                         <button type="submit" class="btn btn-outline btn-lg btn-block">Submit</button>
@@ -104,8 +135,6 @@
                 </div>
             </form>
         </script>
-
-`
 
     @endif
 

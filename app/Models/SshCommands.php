@@ -59,11 +59,24 @@ class SshCommands
         $this->connection->run($command);
     }
 
+    /**
+     * Change file/directory group or owner
+     *
+     * @param $user
+     * @param $group
+     * @param $path
+     */
     public function chown($user, $group, $path)
     {
         $this->connection->run("chown $user:$group $path");
     }
 
+    /**
+     * Create new directories
+     *
+     * @param $rootDir
+     * @param array $directories
+     */
     public function createDirectory($rootDir, array $directories)
     {
         foreach ($directories as &$value)

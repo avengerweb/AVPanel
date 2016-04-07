@@ -22,12 +22,7 @@ window.APPanel = {
             var sitesView = new APPanel.Views.Sites({
                 collection: sites
             });
-
-            sites.fetch({success: function () {
-                $('#page-content-wrapper').html(sitesView.render().$el);
-            }});    
-
-
+            $('#page-content-wrapper').html(sitesView.render().$el);
         });
 
         router.on('route:newSite', function() {
@@ -36,7 +31,6 @@ window.APPanel = {
             });
 
             newSiteForm.on('form:submitted', function(attrs) {
-                console.log(attrs);
                 APPanel.errors.clear(newSiteForm.$el);
                 this.model.save(attrs, {
                     success: function () {
@@ -46,9 +40,6 @@ window.APPanel = {
                         APPanel.errors.handle(newSiteForm.$el, response.responseJSON);
                     }
                 });
-                // attrs.id = sites.isEmpty() ? 1 : (_.max(sites.pluck('id')) + 1);
-                // sites.add(attrs);
-                // router.navigate('sites', true);
             });
 
             $('#page-content-wrapper').html(newSiteForm.render().$el);
@@ -65,7 +56,16 @@ window.APPanel = {
 
                 editSiteForm.on('form:submitted', function(attrs) {
                     site.set(attrs);
-                    router.navigate('sites', true);
+                    APPanel.errors.clear(editSiteForm.$el);
+                    this.model.save(attrs, {
+                        success: function () {
+                            router.navigate('sites', true);
+                        },
+                        error: function (model, response) {
+                            APPanel.errors.handle(editSiteForm.$el, response.responseJSON);
+                        }
+                    });
+
                 });
 
                 $('#page-content-wrapper').html(editSiteForm.render().$el);
@@ -74,7 +74,11 @@ window.APPanel = {
             }
         });
 
-        Backbone.history.start();
+        sites.fetch({success: function () {
+            Backbone.history.start();
+        }});
+
+
     },
 
     errors: {

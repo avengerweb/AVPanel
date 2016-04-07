@@ -2,12 +2,9 @@ APPanel.Models.Site = Backbone.Model.extend({
   defaults: {
     name: null,
     url: null,
-    access_log: false,
-    error_log: true
+    access_log: 0,
+    error_log: 1
   },
-
-  url: "/api/sites",
-
   initialize: function() {
   }
 });
